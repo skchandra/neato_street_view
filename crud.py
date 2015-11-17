@@ -59,17 +59,18 @@ class DBWrapper():
         for i in range(n_tiles):
             i = float(i) # division advantages
             tile_path = os.path.join(self.local_path, "%s_%d.jpg" % (coord, i))
-            tile = panorama[:, i/n_tiles*im_width:(i+1)/n_tiles*im_width, :]
+            left = int(i/n_tiles*im_width)
+            right = int((i+1)/n_tiles*im_width)
+            tile = panorama[:, left:right, :]
             imsave(tile_path, tile)
 
         # insert into SQL using erika's commands
         c = self.conn.cursor()
         for i in range(n_tiles):
-            try:
-                c.execute("INSERT INTO {tn} ({idf}, {cn}) VALUES ('{map_coord}', '{tile_path}')".\
+                c.execute("INSERT OR IGNORE INTO {tn} ({idf}, {cn}) VALUES ('{map_coord}', '{tile_path}')".\
                     format(tn=self.table_name, idf=self.id_column, cn="tile_%d" % i, map_coord=coord, tile_path=os.path.join(self.local_path, "%s_%d.jpg" % (coord, i))))
-            except sqlite3.IntegrityError:
-                print('ERROR: ID already exists in PRIMARY KEY column {}'.format(self.id_column))
+                c.execute("UPDATE {tn} SET {cn}='{tile_path}' WHERE {idf}='{map_coord}'".\
+                    format(tn=self.table_name, idf=self.id_column, cn="tile_%d" % i, map_coord=coord, tile_path=os.path.join(self.local_path, "%s_%d.jpg" % (coord, i))))
 
         self.conn.commit()
 
@@ -89,3 +90,4 @@ if __name__ == '__main__':
     sqlite_file = 'data/neato_street_view.sqlite'    # name of the sqlite database file
     path_to_save_panoramas = 'data/imgs'
     orm = DBWrapper(sqlite_file, path_to_save_panoramas)
+    orm.insert_panorama((0, 0, 0), 'data/climbing_panorama.jpg')
