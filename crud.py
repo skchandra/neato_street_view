@@ -74,7 +74,10 @@ class DBWrapper():
 
         self.conn.commit()
 
-    def load_panorama(coord, theta, n_tiles=10):
+    def choose_tile(self,coord, theta, n_tiles=10):
+        # print out from the theta which tile the neato is facing
+
+        # map_coord_reborn = [int(e) for e in map_coord.strip('()').split(',')]
         """
         Parameters
         ----------
@@ -82,12 +85,21 @@ class DBWrapper():
         theta: angle UI is facing
         width: tile width (default 36)
         """
-        # figure out from the theta, which is the left and right bounds of the viewing window
-        # map_coord_reborn = [int(e) for e in map_coord.strip('()').split(',')]
-        pass
+        c = self.conn.cursor()
+        tilenumber = round(float(theta) / 36)
+        tile = 'tile_' + str(int(tilenumber))
+        c.execute("SELECT ('{tile}') FROM panoramas WHERE map_coordinate=('{coord}')".\
+            format(tile=tile, coord=coord))
+        print c.fetchall()
+
 
 if __name__ == '__main__':
     sqlite_file = 'data/neato_street_view.sqlite'    # name of the sqlite database file
     path_to_save_panoramas = 'data/imgs'
     orm = DBWrapper(sqlite_file, path_to_save_panoramas)
     orm.insert_panorama((0, 0, 0), 'data/climbing_panorama.jpg')
+    orm.insert_panorama((0, 0, 1), 'data/climbing_panorama.jpg')
+    orm.insert_panorama((0, 0, 2), 'data/climbing_panorama.jpg')
+    coord = '(0, 0, 1)'
+    theta = 70
+    orm.choose_tile(coord,theta)
