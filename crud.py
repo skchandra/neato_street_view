@@ -76,14 +76,12 @@ class DBWrapper():
 
     def choose_tile(self,coord, theta, n_tiles=10):
         # print out from the theta which tile the neato is facing
-
-        # map_coord_reborn = [int(e) for e in map_coord.strip('()').split(',')]
         """
         Parameters
         ----------
         coord: 3 coordinate tuple
         theta: angle UI is facing
-        width: tile width (default 36)
+        n_tiles: number of tiles (default 10)
         """
         c = self.conn.cursor()
         tilenumber = round(float(theta) / 36)
@@ -92,6 +90,7 @@ class DBWrapper():
             format(tile=tile, coord=coord))
         print c.fetchall()
 
+        # map_coord_reborn = [int(e) for e in map_coord.strip('()').split(',')]
 
 if __name__ == '__main__':
     sqlite_file = 'data/neato_street_view.sqlite'    # name of the sqlite database file
