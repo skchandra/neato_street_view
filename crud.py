@@ -84,7 +84,7 @@ class DBWrapper():
         n_tiles: number of tiles (default 10)
         """
         c = self.conn.cursor()
-        tilenumber = round(float(theta) / 36)
+        tilenumber = round(float(theta) / (360/n_tiles))
         tile = 'tile_' + str(int(tilenumber))
         c.execute("SELECT ('{tile}') FROM panoramas WHERE map_coordinate=('{coord}')".\
             format(tile=tile, coord=coord))
