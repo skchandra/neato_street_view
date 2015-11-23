@@ -2,7 +2,7 @@
 layout: post
 title:  "A SLAMming Learning Experience In C++"
 date:   2015-11-20 01:28:25
-categories: jekyll update
+categories: blog
 ---
 
 Hey there!  This is Ryan and Kiki and we want to talk to you about a piece of the “Neato (Google) Street View” project: understanding a SLAM algorithm implementation.  For this, we looked at an existing implementation of Hector SLAM, a particular method of SLAM.  This implementation, however, is written in C++, a programming language we were not familiar with at first.  To understand the implementation of Hector SLAM, we learned how to read existing C++ code in the process!
