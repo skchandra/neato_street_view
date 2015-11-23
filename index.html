@@ -1,67 +1,24 @@
-<html>
+---
+layout: default
+---
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Neato Street View : Computational Robotics Final Project Fall 2015 - Creating Google Street View for inside Olin buildings">
+<div class="home">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+  <h1 class="page-heading">Posts</h1>
 
-    <title>Neato Street View</title>
-  </head>
+  <ul class="post-list">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
 
-  <body>
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+      </li>
+    {% endfor %}
+  </ul>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/skchandra/neato_street_view">View on GitHub</a>
+  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
-          <h1 id="project_title">Neato Street View</h1>
-          <h2 id="project_tagline">Computational Robotics Final Project Fall 2015 - Creating Google Street View for inside Olin buildings</h2>
+</div>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/skchandra/neato_street_view/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/skchandra/neato_street_view/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        
-<h3>Project Overview</h3>
-<p>The aim of our project is to implement a bottom-up implementation of Google Street View for the insides of Olin buildings. We have split our goals into specific components:<p>
-<ul>
-  <li>Research Hector SLAM and write Python implementations of some major components</li>
-  <li>Integrate our code into the existing framework and use the Neato robots to map out an area of Olin</li>
-  <li>Learn about and write an image-stitching algorithm to create panoramas of specified waypoints in the map</li>
-  <li>Develop a web interface for users to view the map and related panoramas at each waypoint</li>
-</ul> 
-
-
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>Shivali (Kiki) Chandra (<a href="https://github.com/skchandra" class="user-mention">@skchandra</a>), Ryan Louie (<a href="https://github.com/youralien" class="user-mention">@youralien</a>), James (Zhecan) Wang (<a href="https://github.com/zhecanjameswang" class="user-mention">@zhecanjameswang</a>) and Erika Weiler (<a href="https://github.com/eweiler" class="user-mention">@eweiler</a>).</p>
-
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Neato Street View maintained by <a href="https://github.com/skchandra">skchandra</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
-</html>
