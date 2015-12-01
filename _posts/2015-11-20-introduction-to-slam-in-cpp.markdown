@@ -41,8 +41,8 @@ As mentioned earlier, constructors are used to create objects. A feature that C+
 Finally, something really awesome about C++ is that, similar to typedefs in C, you can define your own aliases for types. Typedefs can be used to create an alias for array types, function types, pointers, classes, etc. They are used in the following way: `typedef OccGridMapBase<LogOddsCell, GridMapLogOddsFunctions> GridMap;`, where the type ‘OccGridMapBase<LogOddsCell, GridMapLogOddsFunctions>’ can now be accessed simply through the word ‘GridMap’.
 
 ##Standard Datastructures
-`std::vector` is an array
-`std::vector<MapProcContainer> mapContainer`
+* `std::vector` is an array
+* Example: `std::vector<MapProcContainer> mapContainer`
 
 
 #SLAM!
