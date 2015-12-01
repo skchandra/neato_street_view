@@ -8,6 +8,7 @@ import sqlite3
 import os
 from skimage.io import imread, imsave
 import ipdb
+from PIL import Image 
 
 class DBWrapper():
 
@@ -85,10 +86,12 @@ class DBWrapper():
         """
         c = self.conn.cursor()
         tilenumber = round(float(theta) / (360/n_tiles))
-        tile = 'tile_' + str(int(tilenumber))
+        tile = str(int(tilenumber))
         c.execute("SELECT ('{tile}') FROM panoramas WHERE map_coordinate=('{coord}')".\
             format(tile=tile, coord=coord))
-        print c.fetchall()
+        tile_image = str(coord) + '_' + str(c.fetchall()[0][0]) + '.jpg'                                                                              
+        img = Image.open('./data/imgs/'+tile_image)
+        img.show() 
 
         # map_coord_reborn = [int(e) for e in map_coord.strip('()').split(',')]
 
