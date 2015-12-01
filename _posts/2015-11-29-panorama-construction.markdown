@@ -1,21 +1,21 @@
 ---
 layout: post
-title:  "Constructing Panoramas, One Stich at a Time"
+title:  "Constructing Panoramas, One Stitch at a Time"
 date:   2015-11-29 22:54:25
 categories: blog
 ---
 
 # Panorama-Construction
 
-What’s pup! (This is where you say “not mutts”). This is James and Erika and we want to talk to you about a piece of the “Neato (Google) Street View” project: visualizing the google street view inside school campus. Our vision for the final product is to allow users to remotely visit our web interface and interact with our “Neato Google Street View”.
+What’s pup! (This is where you say “not mutts”). This is James and Erika and we want to talk to you about a piece of the “Neato (Google) Street View” project: visualizing the Google street view inside school campus. Our vision for the final product is to allow users to remotely visit our web interface and interact with our “Neato Google Street View”.
 
-Besides Slam, this is the another big piece of the project and mainly has three sections. First, the panorama. In order to create a “2.5 D” view, we think creating a panorama view will be useful; Second, the data storage. We need places to store all the pictures and load them to web interface; Third, the web interface.
+Besides SLAM, this is the another big piece of the project and mainly has three sections. First, the panorama. In order to create a “2.5 D” view, we think creating a panorama view will be useful. Second, the data storage. We need places to store all the pictures and load them to web interface. Third, the web interface.
 
 In this blog post we will be touching on the panorama portion of this project…
 
 There are different kinds of panoramas varying with different angles of degrees. In our project, in order to visualise the map fully at specific waypoints we decided to explore making 360 degree panoramas using the neato. Since we don’t have a 360 degree camera built into the neato, our plan is to take many pictures and then stitch them together to form a panorama. We would then upload slices of the panorama into a database to view on an interactive web platform.
 
-Stitching is usually done with needle and thread but you can also use a machine called a sewing machine. They’re pretty cool, but pretty hard to use on pictures so we decided to use our secret weapon supported by the famous guy, Paul Ruvolo ---------- programming tool, python instead.
+Stitching is usually done with needle and thread but you can also use a machine called a sewing machine. They’re pretty cool, but pretty hard to use on pictures so we decided to use our secret weapon supported by the famous guy, Paul Ruvolo ---------- programming tool, Python instead.
 
 Intuitively, we chose to start stitching two images before moving on to multiple image stitching. Even though there are not so many resources online about image stitching we luckily found some resources. After reading some resources, we found that people start image stitching with finding the features in the images first. There are multiple feature detection algorithms online supported by OpenCV library like SIFT, ORB and so on. Based on our past experiences, we chose to use SURF for this part.
 
