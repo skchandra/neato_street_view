@@ -33,7 +33,7 @@ In order to create an object, the first function in a class is typically a const
 Now that we know there are different types of functions, it’s also useful to know the different ways in which they are called:
 
 1. In order to access object methods or reference a method, a period is used. An example is `private_nh_.param("pub_drawings", p_pub_drawings, false);`, where ‘private_nh_ is the object, and its particular parameters for drawings is being set
-2. If you want to access a method of a class directly, use double colons. An example of this is `std::string mapTopicStr(mapTopic_);`, where ‘std’ is the class and its method ‘string’ is being referenced
+2. If you want to access a method of a class/namespace directly, use double colons. An example of this is `std::string mapTopicStr(mapTopic_);`, where ‘std’ is the namespace and its method ‘string’ is being referenced
 3. To reference a pointer to an object, use an arrow (->). We will not go into pointers here, but [this](https://en.wikipedia.org/wiki/Pointer_(computer_programming) "Wiki page") Wikipedia page has a great overview. An example of a reference to a pointer is `drawInterface->setScale(0.05f);`, where ‘drawInterface’ is the pointer to an object, and its method being accessed is ‘setScale’
 
 As mentioned earlier, constructors are used to create objects. A feature that C++ doesn’t entirely do on its own is garbage collection, so it is also necessary to remove the object once it is no longer used. This is where destructors come into play. Destructors are identified by a tilda before the name, and, when called, is used to clean up memory. 
