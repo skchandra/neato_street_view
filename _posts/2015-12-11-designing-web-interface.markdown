@@ -5,8 +5,6 @@ date:   2015-12-11 17:30:25
 categories: blog
 ---
 
-##Developing a Web Interface
-
 Hi everyone! This is Kiki and I’m here to talk about my work from the past week and a half, setting up a site for visitors to view our map and interact with the panoramas. I initially started out using Flask for Python with SQLite3, and developed a basic app that displayed the map. To host the application, we planned to use Heroku; however, from doing research online it we learned that if we ran the free version of Heroku with only one dyno, and used SQLite3 rather than its built-in Postgres, the database would clear itself once every 24 hours. We also found that many users experienced many bugs and complications when using these two technologies together; as a result, we decided to move to developing a Node.js application with SQLite3, and host it on Modulus. 
 
 Through the Node.js backend, the application creates an instance of a server and connects to a database. The database contains the filepath to each panorama, accessible through each picture’s x-coordinate, y-coordinate, and theta (viewing angle). This third field is when the user is actually interacting with the panorama - when they move left or right, different images will be displayed. 
