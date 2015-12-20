@@ -94,4 +94,141 @@ If you ever need to edit your logging code, there should be no issue because you
 
 ##Unit-testing in Python
 
-Check out what could be Olin's first [Python unit-test here](https://github.com/youralien/hector_slam/blob/python/python_slam/test_ScanMatcher.py)!
+Test-driven development "is a software development process that relies on the repetition of a very short development cycle: first the developer writes an (initially failing) automated test case that defines a desired improvement or new function, then produces the minimum amount of code to pass that test, and finally refactors the new code to acceptable standards" ([Wikipedia, 2015](https://en.wikipedia.org/wiki/Test-driven_development)).  If we can write tests for different abstractions in our code, we can quickly be confident about the little pieces that compose the overall algorithm we might be implementing.
+
+The approach is to find a small function in the algorithm, log the expected inputs and outputs, and then make a test case for that function! For example, there was a utility function in the C++ hector slam code called `normalize_angle` which constrains an angle in radians between the interval `[0, pi) U [-pi, 0)`.  To write an equivalent function in Python, we will create the skeleton of this utility method in order to use it in a unit-test.
+
+Skeleton for Python `normalize_angle` function in the implementation file `slam_v1.py`:
+{% highlight python %}
+class Util(object):
+    @staticmethod
+    def normalize_angle(angle):
+        """ Constrains the angles to the range [0, pi) U [-pi, 0) """
+        # TODO: write method to constrain the angle to the interval
+        return angle
+{% endhighlight %}
+
+Then, we can write our test. Since the method should constrain the angles within the interval between `[-pi, pi]`, we can feed in several different angles on the interval `[-2*pi, 2*pi]` and hope that the angle outputs will never be lower than `-pi` or higher than `pi`.
+
+A python unit test for `normalize_angle` in the test file `test_ScanMatcher.py`:
+{% highlight python %}
+class TestUtil(unittest.TestCase):
+    def test_normalize_angle(self):
+        x1 = np.linspace(-2*np.pi, 2*np.pi, 25)
+        f = np.vectorize(Util.normalize_angle)
+        x2 = f(x1)
+        print "\n", np.column_stack((x1,x2))
+        self.assertTrue(x2.min() >= -np.pi)
+        self.assertTrue(x2.max() >= np.pi)
+{% endhighlight %}
+
+Then it is simply about writing the minimum implementation in `Util.normalize_angle` for the test case to pass!  To run the test, python has a test runner called [`nosetests`](https://nose.readthedocs.org/en/latest/), which will find all python `unittest` classes and run those methods whose names start with `test_`.
+
+To test it, I changed to the directory of the the test file and typed
+
+`nosetests test_ScanMatcher.py`.
+
+Here was the output for the dummy implementation which fails the test case, as expected
+
+    ...F
+    ======================================================================
+    FAIL: test_normalize_angle (test_ScanMatcher.TestUtil)
+    ----------------------------------------------------------------------
+    Traceback (most recent call last):
+      File "/home/ryan/catkin_ws/src/neato_street_view/hector_slam/python_slam/test_ScanMatcher.py", line 48, in test_normalize_angle
+        self.assertTrue(x2.min() >= -np.pi)
+    AssertionError: False is not true
+    -------------------- >> begin captured stdout << ---------------------
+
+    [[-6.28318531 -6.28318531]
+     [-5.75958653 -5.75958653]
+     [-5.23598776 -5.23598776]
+     [-4.71238898 -4.71238898]
+     [-4.1887902  -4.1887902 ]
+     [-3.66519143 -3.66519143]
+     [-3.14159265 -3.14159265]
+     [-2.61799388 -2.61799388]
+     [-2.0943951  -2.0943951 ]
+     [-1.57079633 -1.57079633]
+     [-1.04719755 -1.04719755]
+     [-0.52359878 -0.52359878]
+     [ 0.          0.        ]
+     [ 0.52359878  0.52359878]
+     [ 1.04719755  1.04719755]
+     [ 1.57079633  1.57079633]
+     [ 2.0943951   2.0943951 ]
+     [ 2.61799388  2.61799388]
+     [ 3.14159265  3.14159265]
+     [ 3.66519143  3.66519143]
+     [ 4.1887902   4.1887902 ]
+     [ 4.71238898  4.71238898]
+     [ 5.23598776  5.23598776]
+     [ 5.75958653  5.75958653]
+     [ 6.28318531  6.28318531]]
+
+    --------------------- >> end captured stdout << ----------------------
+
+    ----------------------------------------------------------------------
+    Ran 4 tests in 0.004s
+
+    FAILED (failures=1)
+
+You can then use print statements to stdout as well as the assertion errors that the test case gives you to iterate towards a passing implementation!  The passsing implementation for this function can be found at the [most recent state of our github tree](https://github.com/youralien/hector_slam/blob/python/python_slam/slam_v1.py#L24).
+
+You can see that some functions, like `normalize_angle`, are so easy to create expected input and output pairs.  Other methods we found in the SLAM algorithm had function inputs and outputs that were much more particular to the parameters and context of the SLAM algorithm. For these types, the unit-test will likely load the values of the expected inputs and outputs from the logged JSON files.
+
+Below is a slightly longer test case which uses loaded JSON ground-truth program states used as a comparison.
+
+{% highlight python %}
+io = json.load(open('01AFNWIWO5Tyknv3_io.json', 'r'))
+dc = json.load(open('01AFNWIWO5Tyknv3_dataContainer.json', 'r'))
+
+class TestScanMatcher(unittest.TestCase):
+    def test_matchData(self):
+        scanMatcher = ScanMatcher(io=io, dc=dc)
+        out = scanMatcher.matchData(
+              beginEstimateWorld=scanMatcher.io['beginEstimateWorld']
+            , gridMapUtil=None
+            , dataContainer=scanMatcher.dc
+            , covMatrix=scanMatcher.io['covMatrixIn']
+            , maxIterations=scanMatcher.io['maxIterations']
+            )
+        newEstimateWorld, newEstimateMap, covMatrixOut = out
+        vector3ify = lambda arr: np.array(arr).reshape((3,))
+        matrix3ify = lambda arr: np.array(arr).reshape((3,3))
+        print "test values"
+        print vector3ify(scanMatcher.io['newEstimateWorld'])
+        print vector3ify(scanMatcher.io['newEstimateMap'])
+        print matrix3ify(scanMatcher.io['covMatrixOut'])
+
+        print "output values"
+        print newEstimateWorld
+        print newEstimateMap
+        print covMatrixOut
+        self.assertTrue(np.allclose(newEstimateWorld, vector3ify(scanMatcher.io['newEstimateWorld'])))
+        self.assertTrue(np.allclose(newEstimateMap, vector3ify(scanMatcher.io['newEstimateMap'])))
+        self.assertTrue(np.allclose(covMatrixOut, matrix3ify(scanMatcher.io['covMatrixOut'])))
+{% endhighlight %}
+
+Notice that inserting the inputs from the JSON log files is a very readable process via the Python dictionary API. The more human readable and less arbitrary the name of the program state variables, the better.
+
+{% highlight python %}
+out = scanMatcher.matchData(
+      beginEstimateWorld=scanMatcher.io['beginEstimateWorld']
+    , gridMapUtil=None
+    , dataContainer=scanMatcher.dc
+    , covMatrix=scanMatcher.io['covMatrixIn']
+    , maxIterations=scanMatcher.io['maxIterations']
+    )
+{% endhighlight %}
+
+The last lines of this snippet which have the `self.asserTrue` statements are comparing the NumPy vectors for the new estimate of the world post, `newEstimateWorld`, with the ground truth value given by the JSON logs.
+
+{% highlight python %}
+self.assertTrue(np.allclose(newEstimateWorld, vector3ify(scanMatcher.io['newEstimateWorld'])))
+{% endhighlight %}
+
+Check out the final state of our unit tests for the Hector SLAM scan matcher, and [what could be Olin's first Python unit-test](https://github.com/youralien/hector_slam/blob/python/python_slam/test_ScanMatcher.py)!
+
+## Conclusion
+Hopefully that's enough Python / ROS testing workflow details to make you dangerous!  If you have any questions, feel free to leave a line at _`ryan.louie@students.olin.edu`_ or reach out to my on Github at [@youralien](https://www.github.com/youralien).
