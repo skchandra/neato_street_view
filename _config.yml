@@ -3,8 +3,8 @@ title: Neato Street View
 tagline: Computational Robotics Final Project Fall 2015 - Creating Google Street View for inside Olin buildings
 email: shivali.chandra@students.olin.edu
 description: Creating Google Maps + Street View for the inside of Olin College buildings @ Computational Robotics Final Project Fall 2015 
-# baseurl: "/neato_street_view" # the subpath of your site, e.g. /blog/
-# url: "http://skchandra.github.io/neato_street_view/" # the base hostname & protocol for your site
+baseurl: "/neato_street_view" # the subpath of your site, e.g. /blog/
+url: "http://skchandra.github.io/neato_street_view/" # the base hostname & protocol for your site
 github_username:  skchandra
 highlighter: pygments
 github: [Repository metadata]
