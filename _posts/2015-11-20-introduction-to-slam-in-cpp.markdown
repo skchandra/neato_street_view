@@ -46,7 +46,10 @@ Finally, something really awesome about C++ is that, similar to typedefs in C, y
 
 
 #SLAM!
-SLAM stands for Simultaneous Localization and Mapping.  We used an algorithm called Hector SLAM (named after the lab which published the first paper).
+SLAM stands for Simultaneous Localization and Mapping.  We used an algorithm called Hector SLAM, named after the lab which published the first research paper.
+
+- [Research Paper](http://www.sim.informatik.tu-darmstadt.de/publ/download/2011_SSRR_KohlbrecherMeyerStrykKlingauf_Flexible_SLAM_System.pdf)
+- [Original C++ Repo](https://github.com/tu-darmstadt-ros-pkg/hector_slam)
 
 ##Overarching framework and architecture - system diagram
 
