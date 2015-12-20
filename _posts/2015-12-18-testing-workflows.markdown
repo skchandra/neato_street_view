@@ -50,7 +50,7 @@ We used the JSON (Javascript Object Notation) format to store our program state,
 
 Here are two files, with the same 16-bit hash, representing the dataContainer, or laser scan values, and other input and outputs states through one call of the `ScanMatcher::matchData` method.
 
-__16bithash_dataContainer.json__
+__01AFNWIWO5Tyknv3_dataContainer.json__
 {% highlight json %}
 {
 "origo": [-1.016,0],
@@ -65,7 +65,7 @@ __16bithash_dataContainer.json__
 }
 {% endhighlight %}
 
-__16bithash_io.json__
+__01AFNWIWO5Tyknv3_io.json__
 {% highlight json %}
 {
 "beginEstimateWorld" : [
