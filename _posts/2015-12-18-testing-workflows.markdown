@@ -119,7 +119,7 @@ class TestUtil(unittest.TestCase):
         x2 = f(x1)
         print "\n", np.column_stack((x1,x2))
         self.assertTrue(x2.min() >= -np.pi)
-        self.assertTrue(x2.max() >= np.pi)
+        self.assertTrue(x2.max() <= np.pi)
 {% endhighlight %}
 
 Then it is simply about writing the minimum implementation in `Util.normalize_angle` for the test case to pass!  To run the test, python has a test runner called [`nosetests`](https://nose.readthedocs.org/en/latest/), which will find all python `unittest` classes and run those methods whose names start with `test_`.
