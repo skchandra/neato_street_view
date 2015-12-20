@@ -105,7 +105,7 @@ An occupancy map, in the theoretical case, is an underlying probably distributio
 This file is where the representation and update methods are located for the Occupancy Grid Map.  `GridMap` is composed of one key function and another helper function:
 
 * `updateByScan`: Updates the occupancy grid using the laser scan distances from the robot position
-* `updateLineBresenhami`: Updates the map using a bresenham variant for drawing a line from beam start to beam endpoint in map coordinates.  The bresenham method is a ray tracing method.
+* `updateLineBresenhami`: Updates the map using a bresenhami variant for drawing a line from beam start to beam endpoint in map coordinates.  The bresenhami method is a ray tracing method.
 
 ###ScanMatcher
 As the name implies, this file is where the classes and algorithms relating to scan matching are defined. `ScanMatcher` is composed of three notable functions:
