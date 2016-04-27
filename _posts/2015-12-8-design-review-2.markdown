@@ -8,7 +8,7 @@ categories: blog
 
 With less than 2 weeks before our final presentation, the Neato Street View team has come to a great stopping point, developing working MVPs for our major subsystems.  Please have a look at our progress!
 
-##Web Application
+## Web Application
 * Basic Interface:
     1. Ability to click on waypoints in a SLAM map
     2. Pan the camera angle to view a 360 degree panorama

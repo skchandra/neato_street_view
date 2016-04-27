@@ -13,7 +13,7 @@ This should serve as a great starter for teams who want to try an efficient proc
 - Logging program state values from an existing implementation
 - Using Python's `unittest` library to quickly implement larger and larger code blocks.
 
-##Recording and Playing ROS bags
+## Recording and Playing ROS bags
 A `rosbag` is a capture of ROS topics which, when replayed in the absence of the physical robot, publishes those same topics.  This is helpful when you want real data to test your algorithm with, but do not want the overhead of starting up the physical robot.  Since creating a SLAM map requires a robot to drive around and explore an entire area, this process could take upwards of minutes! Recording a `rosbag` of this exploration makes the process infinitely easier and repeatable.
 
 In order to record all sensor data into a rosbag, one can use
@@ -36,7 +36,7 @@ or to have the bag playing on loop,
 
 More info can be found on the [ROS website](http://wiki.ros.org/rosbag/Commandline).
 
-##Logging program state values from an existing implementation
+## Logging program state values from an existing implementation
 Our work with test-driven development of existing algorithmic implementations required a very specific agenda:
 
 1. Record the program states of an existing implementation.  This could include values of input arguments, output arguments, and/or variables during intermediate computations.
@@ -92,7 +92,7 @@ __01AFNWIWO5Tyknv3_io.json__
 
 If you ever need to edit your logging code, there should be no issue because you can replay the ROS bag, collecting these new values.  Speeding-up the process of collecting variables, seeing which ones are useful to measure, and recollecting more useful values based on your work is essential for efficient development!
 
-##Unit-testing in Python
+## Unit-testing in Python
 
 Test-driven development "is a software development process that relies on the repetition of a very short development cycle: first the developer writes an (initially failing) automated test case that defines a desired improvement or new function, then produces the minimum amount of code to pass that test, and finally refactors the new code to acceptable standards" ([Wikipedia, 2015](https://en.wikipedia.org/wiki/Test-driven_development)).  If we can write tests for different abstractions in our code, we can quickly be confident about the little pieces that compose the overall algorithm we might be implementing.
 
